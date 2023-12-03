@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import clsx from "clsx";
 import { Inter } from "next/font/google";
 import Providers from "./providers";
 import "./globals.css";
@@ -17,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="cupcake">
-      <body className={inter.className}>
+      <body className={clsx(inter.className, "prose max-w-none")}>
         <Providers>{children}</Providers>
       </body>
     </html>
