@@ -11,7 +11,7 @@ export const drawerID = "my-drawer";
 
 const links = [
   { name: "Dashboard", href: "/", icon: HomeIcon },
-  { name: "Transactions", href: "/transactions", icon: CreditCardIcon },
+  { name: "testing", href: "/transactions", icon: CreditCardIcon },
 ];
 
 export default function Drawer({ children }: { children: React.ReactNode }) {
