@@ -20,22 +20,22 @@ export default function Navbar() {
         </div>
         <div className="flex-1" />
         <div className="flex-none gap-2">
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <details>
-                {/* TODO: Add theme functionality */}
-                <summary className="h-12 content-center">Theme</summary>
-                <ul className="p-2 bg-base-100 rounded-t-none">
-                  <li>
-                    <div>Link 1</div>
-                  </li>
-                  <li>
-                    <div>Link 2</div>
-                  </li>
-                </ul>
-              </details>
-            </li>
-          </ul>
+          {/* TODO: Add theme functionality - but the root will no longer be statically pre-rendered */}
+          {/* <ul className="menu menu-horizontal px-1"> */}
+          {/*   <li> */}
+          {/*     <details> */}
+          {/*       <summary className="h-12 content-center">Theme</summary> */}
+          {/*       <ul className="p-2 bg-base-100 rounded-t-none"> */}
+          {/*         <li> */}
+          {/*           <div>Link 1</div> */}
+          {/*         </li> */}
+          {/*         <li> */}
+          {/*           <div>Link 2</div> */}
+          {/*         </li> */}
+          {/*       </ul> */}
+          {/*     </details> */}
+          {/*   </li> */}
+          {/* </ul> */}
           <SignOutButton>
             <button className="btn btn-circle">
               <ArrowLeftOnRectangleIcon className="h-5 w-5" />
