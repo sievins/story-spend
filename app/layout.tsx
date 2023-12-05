@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import clsx from "clsx";
 import { Inter } from "next/font/google";
 import Providers from "./providers";
+import Drawer from "./components/drawer";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,8 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="cupcake">
-      <body className={clsx(inter.className, "prose max-w-none")}>
-        <Providers>{children}</Providers>
+      <body className={inter.className}>
+        <Providers>
+          <Drawer>{children}</Drawer>
+        </Providers>
       </body>
     </html>
   );
