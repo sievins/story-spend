@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { SignOutButton } from "@clerk/nextjs";
-import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
+// import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import { drawerID } from "./drawer";
 
@@ -36,11 +35,10 @@ export default function Navbar() {
           {/*     </details> */}
           {/*   </li> */}
           {/* </ul> */}
-          <SignOutButton>
-            <button className="btn btn-circle">
-              <ArrowLeftOnRectangleIcon className="h-5 w-5" />
-            </button>
-          </SignOutButton>
+          {/* TODO: Add authentication functionality */}
+          {/* <button className="btn btn-circle"> */}
+          {/*   <ArrowLeftOnRectangleIcon className="h-5 w-5" /> */}
+          {/* </button> */}
         </div>
       </nav>
     </div>

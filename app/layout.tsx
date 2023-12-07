@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Providers from "./providers";
 import Drawer from "./components/drawer";
 import "./globals.css";
 
@@ -19,9 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="cupcake">
       <body className={`${inter.className} subpixel-antialiased`}>
-        <Providers>
-          <Drawer>{children}</Drawer>
-        </Providers>
+        <Drawer>{children}</Drawer>
       </body>
     </html>
   );
