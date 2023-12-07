@@ -20,7 +20,7 @@ export default function Drawer({ children }: { children: React.ReactNode }) {
   return (
     <div className="drawer lg:drawer-open">
       <input id={drawerID} type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col items-center prose max-w-none">
+      <div className="drawer-content flex flex-col prose max-w-none">
         <Navbar />
         {children}
       </div>
