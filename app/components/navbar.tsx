@@ -1,7 +1,7 @@
 import Link from "next/link";
 // import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
 import { Bars3Icon } from "@heroicons/react/24/solid";
-import { drawerID } from "./drawer";
+import { drawerID } from "@/components/drawer";
 
 export default function Navbar() {
   return (

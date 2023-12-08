@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { HomeIcon } from "@heroicons/react/24/solid";
 import { CreditCardIcon } from "@heroicons/react/24/solid";
-import Navbar from "./navbar";
+import Navbar from "@/components/navbar";
 
 export const drawerID = "my-drawer";
 
