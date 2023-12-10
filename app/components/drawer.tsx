@@ -21,7 +21,9 @@ export default function Drawer({ children }: { children: React.ReactNode }) {
       <input id={drawerID} type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col prose max-w-none">
         <Navbar />
-        {children}
+        <main className="flex flex-col lg:p-16 lg:pt-12 p-6 pt-4">
+          {children}
+        </main>
       </div>
       <div className="drawer-side z-40">
         <label
