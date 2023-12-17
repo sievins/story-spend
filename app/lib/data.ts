@@ -1,7 +1,5 @@
 import { unstable_noStore as noStore } from "next/cache";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "@/db";
 
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString("en-GB", {
