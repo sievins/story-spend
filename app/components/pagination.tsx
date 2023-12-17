@@ -72,7 +72,7 @@ function PaginationNumber({
       <EllipsisHorizontalIcon className="w-4" />
     </div>
   ) : (
-    <Link href={href} className={className}>
+    <Link href={href} scroll={false} className={className}>
       {page}
     </Link>
   );
@@ -99,7 +99,7 @@ function PaginationArrow({
     );
 
   return (
-    <Link className={className} href={href}>
+    <Link scroll={false} className={className} href={href}>
       {icon}
     </Link>
   );

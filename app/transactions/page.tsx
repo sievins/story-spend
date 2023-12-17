@@ -2,7 +2,15 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import Table from "@/app/transactions/table";
 
-export default function Transactions() {
+export default function Transactions({
+  searchParams,
+}: {
+  searchParams?: {
+    page?: string;
+  };
+}) {
+  const currentPage = Number(searchParams?.page) || 1;
+
   return (
     <>
       <h1>Transactions</h1>
@@ -11,7 +19,7 @@ export default function Transactions() {
         <PlusIcon className="h-5 w-5" />
       </Link>
       <div className="h-4" />
-      <Table />
+      <Table currentPage={currentPage} />
     </>
   );
 }

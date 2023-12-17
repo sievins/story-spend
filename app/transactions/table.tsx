@@ -5,22 +5,25 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 import Pagination from "@/components/pagination";
-import { fetchTransactions } from "@/data";
+import { fetchTransactions, fetchTransactionsPages } from "@/data";
 
-export default function TableWrapper() {
+export default function TableWrapper({ currentPage }: { currentPage: number }) {
   return (
     <div className="card card-normal bg-base-100 shadow-xl">
       <div className="card-body max-lg:!p-4">
-        <Suspense fallback={<TableSkeleton />}>
-          <Table />
+        <Suspense key={currentPage} fallback={<TableSkeleton />}>
+          <Table currentPage={currentPage} />
         </Suspense>
       </div>
     </div>
   );
 }
 
-async function Table() {
-  const transactions = await fetchTransactions();
+async function Table({ currentPage }: { currentPage: number }) {
+  const [totalPages, transactions] = await Promise.all([
+    fetchTransactionsPages(),
+    fetchTransactions(currentPage),
+  ]);
 
   return (
     <>
@@ -63,7 +66,7 @@ async function Table() {
         </table>
       </div>
       <div className="flex w-full justify-center">
-        <Pagination totalPages={10} />
+        <Pagination totalPages={totalPages} />
       </div>
     </>
   );
