@@ -5,6 +5,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 import Pagination from "@/components/pagination";
+import TableError from "@/app/transactions/components/table-error";
 import { fetchTransactions, fetchTransactionsPages } from "@/data";
 
 export default function TableWrapper({ currentPage }: { currentPage: number }) {
@@ -12,7 +13,9 @@ export default function TableWrapper({ currentPage }: { currentPage: number }) {
     <div className="card card-normal bg-base-100 shadow-xl">
       <div className="card-body max-lg:!p-4">
         <Suspense key={currentPage} fallback={<TableSkeleton />}>
-          <Table currentPage={currentPage} />
+          <TableError>
+            <Table currentPage={currentPage} />
+          </TableError>
         </Suspense>
       </div>
     </div>
@@ -20,6 +23,7 @@ export default function TableWrapper({ currentPage }: { currentPage: number }) {
 }
 
 async function Table({ currentPage }: { currentPage: number }) {
+  console.log("Render table");
   const [totalPages, transactions] = await Promise.all([
     fetchTransactionsPages(),
     fetchTransactions(currentPage),
