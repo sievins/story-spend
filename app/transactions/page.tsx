@@ -15,7 +15,7 @@ export default function Transactions({
     <>
       <h1>Transactions</h1>
       <Link className="btn self-end" href="/transactions/create">
-        Add Transaction
+        Add transaction
         <PlusIcon className="h-5 w-5" />
       </Link>
       <div className="h-4" />
