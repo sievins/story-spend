@@ -26,7 +26,7 @@ export default async function Transactions() {
           <input
             type="number"
             className="input input-bordered w-full max-w-sm"
-            min="0.00"
+            min="0.01"
             step="0.01"
             required
           />
