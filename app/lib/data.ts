@@ -49,3 +49,16 @@ export async function fetchTransactions(page: number) {
     throw new Error("Failed to fetch transactions.");
   }
 }
+
+export async function fetchBooks() {
+  noStore();
+
+  try {
+    const books = await prisma.book.findMany();
+
+    return books;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch books.");
+  }
+}
