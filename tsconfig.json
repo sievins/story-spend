@@ -22,6 +22,7 @@
       "@/*": ["./*"],
       "@/components/*": ["./app/components/*"],
       "@/data": ["./app/lib/data.ts"],
+      "@/actions": ["./app/lib/actions.ts"],
       "@/db": ["./app/lib/db.ts"]
     }
   },
