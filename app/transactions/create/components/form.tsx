@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useFormState } from "react-dom";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { CheckCircleIcon as CheckCircleOutlineIcon } from "@heroicons/react/24/outline";
@@ -7,6 +8,10 @@ import { createTransaction } from "@/actions";
 import type { Book } from "@prisma/client";
 
 export default function Form({ books }: { books: Book[] }) {
+  const [BookCheckIcon, setBookCheckIcon] = useState<
+    typeof CheckCircleOutlineIcon
+  >(CheckCircleOutlineIcon);
+
   const [_state, dispatch] = useFormState(createTransaction, null);
 
   const today = new Date().toISOString().split("T")[0];
@@ -116,6 +121,14 @@ export default function Form({ books }: { books: Book[] }) {
               name="bookId"
               className="select select-bordered w-full"
               defaultValue="No book selected"
+              onChange={(e) => {
+                const bookId = e.target.value;
+                if (bookId) {
+                  setBookCheckIcon(CheckCircleIcon);
+                } else {
+                  setBookCheckIcon(CheckCircleOutlineIcon);
+                }
+              }}
             >
               <option value="">No book selected</option>
               {books.map((book) => (
@@ -128,7 +141,7 @@ export default function Form({ books }: { books: Book[] }) {
           <div className="hidden peer-has-[:valid]:flex flex-col">
             <div className="h-9" />
             <div className="flex items-center h-12 ml-2">
-              <CheckCircleOutlineIcon className="w-10 h-10 text-success" />
+              <BookCheckIcon className="w-10 h-10 text-success" />
             </div>
           </div>
         </div>
