@@ -37,6 +37,9 @@ export async function fetchTransactions(page: number) {
       include: {
         book: true,
       },
+      orderBy: {
+        date: "desc",
+      },
     });
 
     return transactions.map((transaction) => ({
