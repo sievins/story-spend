@@ -30,28 +30,18 @@ const transactionSchema = z.object({
 });
 
 export async function createTransaction(_prevState: any, formData: FormData) {
-  const validatedFields = transactionSchema.safeParse({
-    title: formData.get("title"),
-    amount: formData.get("amount"),
-    date: formData.get("date"),
-    bookId: formData.get("bookId"),
-  });
+  const validatedFields = transactionSchema.safeParse(
+    Object.fromEntries(formData.entries()),
+  );
 
   if (!validatedFields.success) {
     console.error("Validation Error:", validatedFields.error);
     return;
   }
 
-  const { title, amount, date, bookId } = validatedFields.data;
-
   try {
     await prisma.transaction.create({
-      data: {
-        title,
-        amount,
-        date,
-        bookId,
-      },
+      data: validatedFields.data,
     });
   } catch (error) {
     console.error("Database Error:", error);
