@@ -23,7 +23,6 @@ export default function TableWrapper({ currentPage }: { currentPage: number }) {
 }
 
 async function Table({ currentPage }: { currentPage: number }) {
-  console.log("Render table");
   const [totalPages, transactions] = await Promise.all([
     fetchTransactionsPages(),
     fetchTransactions(currentPage),
