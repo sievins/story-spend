@@ -1,11 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { CheckCircleIcon as CheckCircleOutlineIcon } from "@heroicons/react/24/outline";
 import { createTransaction } from "@/actions";
 import type { Book } from "@prisma/client";
+
+function Submit() {
+  const { pending } = useFormStatus();
+
+  return (
+    <input
+      type="submit"
+      className="btn btn-primary"
+      value="Create my transaction"
+      disabled={pending}
+    />
+  );
+}
 
 export default function Form({ books }: { books: Book[] }) {
   const [BookCheckIcon, setBookCheckIcon] = useState<
@@ -149,11 +162,7 @@ export default function Form({ books }: { books: Book[] }) {
 
       <div className="h-6" />
 
-      <input
-        type="submit"
-        className="btn btn-primary"
-        value="Create my transaction"
-      />
+      <Submit />
     </form>
   );
 }
