@@ -21,7 +21,8 @@ export const transactionSchema = z.object({
           invalid_type_error: "The amount must be a number",
         })
         .positive("The amount must be positive")
-        .multipleOf(0.01, "The amount must be a multiple of 0.01"),
+        .multipleOf(0.01, "The amount must be a multiple of 0.01")
+        .transform((value) => value * 100),
     ),
   date: z.coerce.date({
     required_error: "A date is required",
