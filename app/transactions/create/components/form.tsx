@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { CheckCircleIcon as CheckCircleOutlineIcon } from "@heroicons/react/24/outline";
 import { createTransaction } from "@/actions";
+import { transactionSchema, type TransactionSchema } from "@/schemas";
 import type { Book } from "@prisma/client";
+import clsx from "clsx";
 
-function Submit() {
+function Submit({ disabled }: { disabled: boolean }) {
   const { pending } = useFormStatus();
 
   return (
@@ -15,22 +17,70 @@ function Submit() {
       type="submit"
       className="btn btn-primary"
       value="Create my transaction"
-      disabled={pending}
+      disabled={disabled || pending}
     />
   );
 }
 
 export default function Form({ books }: { books: Book[] }) {
+  // No need to use _state (containing the errors from server actions): can only submit the transaction if the form is valid.
+  const [_state, dispatch] = useFormState(createTransaction, null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const [submitDisabled, setSubmitDisabled] = useState(true);
+  const [errors, setErrors] = useState<
+    Record<keyof TransactionSchema, string[]>
+  >({
+    title: [],
+    amount: [],
+    date: [],
+    bookId: [],
+  });
+
   const [BookCheckIcon, setBookCheckIcon] = useState<
     typeof CheckCircleOutlineIcon
   >(CheckCircleOutlineIcon);
 
-  const [_state, dispatch] = useFormState(createTransaction, null);
+  // Disbable the submit button if the form is invalid.
+  const handleChange = () => {
+    const form = formRef.current;
+    if (form) {
+      const isValid = form.checkValidity();
+      setSubmitDisabled(!isValid);
+    }
+  };
+
+  // Validate the field on blur.
+  const handleBlur = (field: keyof TransactionSchema) => {
+    const form = formRef.current;
+    if (form) {
+      const formData = new FormData(form);
+
+      const validatedFields = transactionSchema.safeParse(
+        Object.fromEntries(formData.entries()),
+      );
+
+      if (!validatedFields.success) {
+        const { fieldErrors } = validatedFields.error.flatten();
+        setErrors((errors) => ({
+          ...errors,
+          [field]: fieldErrors[field] ?? [],
+        }));
+      } else {
+        setErrors({
+          title: [],
+          amount: [],
+          date: [],
+          bookId: [],
+        });
+      }
+    }
+  };
 
   const today = new Date().toISOString().split("T")[0];
 
   return (
-    <form action={dispatch}>
+    <form action={dispatch} ref={formRef} onChange={handleChange}>
       <div className="flex flex-col gap-y-2">
         {/* Title field */}
         <div className="flex">
@@ -45,7 +95,23 @@ export default function Form({ books }: { books: Book[] }) {
               className="input input-bordered w-full"
               maxLength={100}
               required
+              onBlur={() => handleBlur("title")}
             />
+            <div
+              className={clsx("label hidden", {
+                "!flex": errors.title.length,
+              })}
+            >
+              <span
+                className={clsx("label-text-alt flex flex-col", {
+                  "text-error": errors.title.length,
+                })}
+              >
+                {errors.title.map((error) => (
+                  <span key={error}>{error}</span>
+                ))}
+              </span>
+            </div>
           </label>
           <div className="hidden peer-has-[:valid]:flex flex-col">
             <div className="h-9" />
@@ -65,11 +131,29 @@ export default function Form({ books }: { books: Book[] }) {
               id="amount"
               name="amount"
               type="number"
-              className="input input-bordered w-full"
+              className={clsx("input input-bordered w-full", {
+                "input-error": errors.amount.length,
+              })}
               min="0.01"
               step="0.01"
               required
+              onBlur={() => handleBlur("amount")}
             />
+            <div
+              className={clsx("label hidden", {
+                "!flex": errors.amount.length,
+              })}
+            >
+              <span
+                className={clsx("label-text-alt flex flex-col", {
+                  "text-error": errors.amount.length,
+                })}
+              >
+                {errors.amount.map((error) => (
+                  <span key={error}>{error}</span>
+                ))}
+              </span>
+            </div>
           </label>
           <div className="hidden peer-has-[:valid]:flex flex-col">
             <div className="h-9" />
@@ -162,7 +246,7 @@ export default function Form({ books }: { books: Book[] }) {
 
       <div className="h-6" />
 
-      <Submit />
+      <Submit disabled={submitDisabled} />
     </form>
   );
 }
