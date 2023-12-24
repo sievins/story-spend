@@ -2,15 +2,24 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { signOut as signOutAuth } from "@/auth";
+import { auth as authNext, signOut as signOutNext } from "@/auth";
 import { transactionSchema } from "@/schemas";
 import prisma from "@/db";
 
+async function isSignedIn() {
+  const auth = await authNext();
+  return !!auth?.user;
+}
+
 export async function signOut() {
-  await signOutAuth();
+  await signOutNext();
 }
 
 export async function createTransaction(_prevState: any, formData: FormData) {
+  if (!isSignedIn()) {
+    throw new Error("You must be signed in to create a transaction.");
+  }
+
   const validatedFields = transactionSchema.safeParse(
     Object.fromEntries(formData.entries()),
   );
