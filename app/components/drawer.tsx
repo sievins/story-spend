@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { HomeIcon, CreditCardIcon } from "@heroicons/react/24/solid";
 import Navbar from "@/components/navbar";
+import logo from "@/public/logo.png";
 
 export const drawerID = "my-drawer";
 
@@ -37,21 +39,24 @@ export default function Drawer({ children }: { children: React.ReactNode }) {
               Story Spend
             </Link>
           </div>
-          <ul className="menu h-full p-4 bg-base-200 text-base-content gap-2">
-            {links.map(({ name, href, icon: Icon }) => (
-              <li key={name}>
-                <Link
-                  className={clsx("btn btn-ghost text-lg justify-start", {
-                    active: href === pathname,
-                  })}
-                  href={href}
-                >
-                  <Icon className="h-5 w-5" />
-                  {name}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="menu h-full p-4 bg-base-200">
+            <Image className="p-2" src={logo} alt="Logo" />
+            <ul className="text-base-content flex flex-col flex-wrap gap-2">
+              {links.map(({ name, href, icon: Icon }) => (
+                <li key={name}>
+                  <Link
+                    className={clsx("btn btn-ghost text-lg justify-start", {
+                      active: href === pathname,
+                    })}
+                    href={href}
+                  >
+                    <Icon className="h-5 w-5" />
+                    {name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </aside>
       </div>
     </div>
