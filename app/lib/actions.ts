@@ -2,8 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { signOut as signOutAuth } from "@/auth";
 import { transactionSchema } from "@/schemas";
 import prisma from "@/db";
+
+export async function signOut() {
+  await signOutAuth();
+}
 
 export async function createTransaction(_prevState: any, formData: FormData) {
   const validatedFields = transactionSchema.safeParse(

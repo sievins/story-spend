@@ -1,12 +1,12 @@
 import Link from "next/link";
-// import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import { drawerID } from "@/components/drawer";
+import SignOut from "@/components/sign-out";
 
 export default function Navbar() {
   return (
     <div className="bg-base-100 text-base-content sticky top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur shadow-sm">
-      <nav className="navbar w-full">
+      <nav className="navbar w-full pr-4">
         <div className="flex-none lg:hidden">
           <label htmlFor={drawerID} className="btn btn-square btn-ghost">
             <Bars3Icon className="h-6 w-6" />
@@ -35,10 +35,7 @@ export default function Navbar() {
           {/*     </details> */}
           {/*   </li> */}
           {/* </ul> */}
-          {/* TODO: Add authentication functionality */}
-          {/* <button className="btn btn-circle"> */}
-          {/*   <ArrowLeftOnRectangleIcon className="h-5 w-5" /> */}
-          {/* </button> */}
+          <SignOut />
         </div>
       </nav>
     </div>
