@@ -24,7 +24,9 @@
       "@/data": ["./app/lib/data.ts"],
       "@/actions": ["./app/lib/actions.ts"],
       "@/schemas": ["./app/lib/schemas.ts"],
-      "@/db": ["./app/lib/db.ts"]
+      "@/db": ["./app/lib/db.ts"],
+      "@/auth": ["./auth.ts"],
+      "@/auth-config": ["./auth.config.ts"]
     }
   },
   "ts-node": {
