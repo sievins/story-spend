@@ -1,11 +1,8 @@
 import { Suspense } from "react";
-import {
-  ReceiptRefundIcon,
-  PencilSquareIcon,
-  TrashIcon,
-} from "@heroicons/react/24/solid";
+import { ReceiptRefundIcon } from "@heroicons/react/24/solid";
 import Pagination from "@/components/pagination";
 import Error from "@/components/error";
+import Actions from "@/app/transactions/components/actions";
 import { fetchTransactions, fetchTransactionsPages } from "@/data";
 
 export default function TableWrapper({ currentPage }: { currentPage: number }) {
@@ -54,14 +51,7 @@ async function Table({ currentPage }: { currentPage: number }) {
                   </button>
                 </td>
                 <td>
-                  <div className="flex justify-end gap-2">
-                    <button className="btn btn-ghost btn-xs align-middle">
-                      <PencilSquareIcon className="h-5 w-5" />
-                    </button>
-                    <button className="btn btn-ghost btn-xs align-middle">
-                      <TrashIcon className="h-5 w-5" />
-                    </button>
-                  </div>
+                  <Actions transactionId={transaction.id} />
                 </td>
               </tr>
             ))}

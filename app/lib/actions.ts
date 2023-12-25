@@ -41,3 +41,22 @@ export async function createTransaction(_prevState: any, formData: FormData) {
   revalidatePath("/transactions");
   redirect("/transactions");
 }
+
+export async function deleteTransaction(id: number) {
+  if (!isSignedIn()) {
+    throw new Error("You must be signed in to delete a transaction.");
+  }
+
+  try {
+    await prisma.transaction.delete({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to delete transaction.");
+  }
+
+  revalidatePath("/transactions");
+}
