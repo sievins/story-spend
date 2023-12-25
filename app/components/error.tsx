@@ -11,10 +11,6 @@ function Fallback({ error }: FallbackProps) {
   );
 }
 
-export default function TableError({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Error({ children }: { children: React.ReactNode }) {
   return <ErrorBoundary FallbackComponent={Fallback}>{children}</ErrorBoundary>;
 }
