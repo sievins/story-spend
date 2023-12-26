@@ -40,7 +40,7 @@ export default function Drawer({ children }: { children: React.ReactNode }) {
             </Link>
           </div>
           <div className="menu h-full p-4 bg-base-200">
-            <Image className="p-2 pb-0" src={logo} alt="Logo" />
+            <Image className="p-2 pb-0" src={logo} alt="Logo" priority />
             <ul className="text-base-content flex flex-col flex-wrap gap-2">
               {links.map(({ name, href, icon: Icon }) => (
                 <li key={name}>

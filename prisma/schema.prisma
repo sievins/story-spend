@@ -14,6 +14,8 @@ model Book {
   id            Int            @id @default(autoincrement())
   title         String         @unique
   transactions  Transaction[]
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String
 }
 
 model Transaction {
@@ -23,6 +25,8 @@ model Transaction {
   date   DateTime @db.Date
   book   Book?    @relation(fields: [bookId], references: [id])
   bookId Int?
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 }
 
 // Authentication adapter
@@ -62,6 +66,8 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  books         Book[]
+  transactions  Transaction[]
 }
 
 model VerificationToken {

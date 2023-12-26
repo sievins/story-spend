@@ -29,10 +29,10 @@ cp .env.example .env.local
 
 and update the values in `.env.local`.
 
-**Setup and seed the database:**
+**Setup the database (seed it after logging in, having creating a user):**
 
 ```bash
-bunx prisma migrate dev
+bunx prisma migrate dev --skip-seed
 ```
 
 **Run the development server:**
@@ -41,4 +41,10 @@ bunx prisma migrate dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser and sign in.
+
+**Seed the database:**
+
+```bash
+bunx prisma db seed
+```

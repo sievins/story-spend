@@ -1,4 +1,5 @@
 import { unstable_noStore as noStore } from "next/cache";
+import { auth as authNext } from "@/auth";
 import prisma from "@/db";
 
 export const formatCurrency = (amount: number) => {
@@ -14,11 +15,31 @@ export const formatDate = (date: Date) => {
 
 const pageSize = 10;
 
+async function fetchUser() {
+  try {
+    const auth = await authNext();
+    const user = auth?.user;
+
+    if (!user) throw new Error("User not found");
+
+    return user;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user.");
+  }
+}
+
 export async function fetchTransactionsPages() {
   noStore();
 
   try {
-    const count = await prisma.transaction.count();
+    const user = await fetchUser();
+
+    const count = await prisma.transaction.count({
+      where: {
+        userId: user.id,
+      },
+    });
 
     return Math.ceil(count / pageSize);
   } catch (error) {
@@ -31,6 +52,8 @@ export async function fetchTransactions(page: number) {
   noStore();
 
   try {
+    const user = await fetchUser();
+
     const transactions = await prisma.transaction.findMany({
       skip: (page - 1) * pageSize,
       take: pageSize,
@@ -39,6 +62,9 @@ export async function fetchTransactions(page: number) {
       },
       orderBy: {
         date: "desc",
+      },
+      where: {
+        userId: user.id,
       },
     });
 
@@ -57,7 +83,13 @@ export async function fetchBooks() {
   noStore();
 
   try {
-    const books = await prisma.book.findMany();
+    const user = await fetchUser();
+
+    const books = await prisma.book.findMany({
+      where: {
+        userId: user.id,
+      },
+    });
 
     return books;
   } catch (error) {

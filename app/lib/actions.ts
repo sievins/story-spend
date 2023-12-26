@@ -15,6 +15,20 @@ export async function signOut() {
   await signOutNext();
 }
 
+async function fetchUser() {
+  try {
+    const auth = await authNext();
+    const user = auth?.user;
+
+    if (!user) throw new Error("User not found.");
+
+    return user;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch user.");
+  }
+}
+
 export async function createTransaction(_prevState: any, formData: FormData) {
   if (!isSignedIn()) {
     throw new Error("You must be signed in to create a transaction.");
@@ -30,8 +44,13 @@ export async function createTransaction(_prevState: any, formData: FormData) {
   }
 
   try {
+    const user = await fetchUser();
+
     await prisma.transaction.create({
-      data: validatedFields.data,
+      data: {
+        ...validatedFields.data,
+        userId: user.id,
+      },
     });
   } catch (error) {
     console.error("Database Error:", error);
