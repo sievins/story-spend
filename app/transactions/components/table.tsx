@@ -27,7 +27,8 @@ async function Table({ currentPage }: { currentPage: number }) {
 
   return (
     <>
-      <div className="overflow-x-auto">
+      {/* Allow tooltip errors (on delete) to overlow on large screens */}
+      <div className="overflow-x-auto lg:overflow-x-visible">
         <table className="table table-zebra">
           <thead>
             <tr>
