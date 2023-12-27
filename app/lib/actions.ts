@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth as authNext, signOut as signOutNext } from "@/auth";
-import { transactionSchema } from "@/schemas";
+import { transactionSchema, bookSchema } from "@/schemas";
 import prisma from "@/db";
 
 async function isSignedIn() {
@@ -78,4 +78,36 @@ export async function deleteTransaction(id: number) {
   }
 
   revalidatePath("/transactions");
+}
+
+export async function createBook(_prevState: any, formData: FormData) {
+  throw new Error("Failed to create book.");
+  if (!isSignedIn()) {
+    throw new Error("You must be signed in to create a book.");
+  }
+
+  const validatedFields = bookSchema.safeParse(
+    Object.fromEntries(formData.entries()),
+  );
+
+  if (!validatedFields.success) {
+    console.error("Validation Error:", validatedFields.error);
+    return validatedFields.error.flatten().fieldErrors;
+  }
+
+  try {
+    const user = await fetchUser();
+
+    await prisma.book.create({
+      data: {
+        ...validatedFields.data,
+        userId: user.id,
+      },
+    });
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to create book.");
+  }
+
+  revalidatePath("/transactions/create");
 }

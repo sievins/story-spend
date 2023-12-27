@@ -35,3 +35,15 @@ export const transactionSchema = z.object({
 });
 
 export type TransactionSchema = z.infer<typeof transactionSchema>;
+
+export const bookSchema = z.object({
+  title: z
+    .string({
+      required_error: "A book title is required",
+      invalid_type_error: "The book title must be a string",
+    })
+    .min(1, "A book title is required")
+    .max(100, "The book title must be 100 or fewer characters long"),
+});
+
+export type BookSchema = z.infer<typeof bookSchema>;
