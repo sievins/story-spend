@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { CheckCircleIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 import { CheckCircleIcon as CheckCircleOutlineIcon } from "@heroicons/react/24/outline";
 import { createTransaction } from "@/actions";
 import { transactionSchema, type TransactionSchema } from "@/schemas";
@@ -209,9 +209,17 @@ export default function Form({ books }: { books: Book[] }) {
 
         {/* Book field */}
         <div className="flex">
-          <label className="peer form-control w-full max-w-sm">
-            <div className="label">
+          <label className="peer form-control w-full max-w-sm" htmlFor="book">
+            <div className="label justify-start gap-x-2">
               <span className="label-text">Book (optional)</span>
+              <div className="tooltip h-5" data-tip="Create book">
+                <button
+                  className="btn btn-ghost h-5 min-h-0 px-0.5"
+                  type="button"
+                >
+                  <PlusCircleIcon className="w-[18px] h-[18px] fill-primary" />
+                </button>
+              </div>
             </div>
             <select
               id="book"
