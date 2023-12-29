@@ -11,6 +11,7 @@ import clsx from "clsx";
 import CreateBook, {
   createBookId,
 } from "@/app/transactions/create/components/create-book";
+import domPurify from "@/lib/dom-purify";
 
 function Submit({ disabled }: { disabled: boolean }) {
   const { pending } = useFormStatus();
@@ -250,7 +251,7 @@ export default function Form({ books }: { books: Book[] }) {
                 <option value="">No book selected</option>
                 {books.map((book) => (
                   <option key={book.id} value={book.id}>
-                    {book.title}
+                    {domPurify(book.title)}
                   </option>
                 ))}
               </select>

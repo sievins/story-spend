@@ -26,7 +26,8 @@
       "@/schemas": ["./app/lib/schemas.ts"],
       "@/db": ["./app/lib/db.ts"],
       "@/auth": ["./auth.ts"],
-      "@/auth-config": ["./auth.config.ts"]
+      "@/auth-config": ["./auth.config.ts"],
+      "@/lib/*": ["./app/lib/*"]
     }
   },
   "ts-node": {
