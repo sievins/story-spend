@@ -80,6 +80,15 @@ function Form({ onSuccessfulSubmit }: { onSuccessfulSubmit: () => void }) {
     }
   };
 
+  // Clear the book title field when the book is successfully created.
+  const handleSuccessfulSubmit = () => {
+    const form = formRef.current;
+    if (form) {
+      form.reset();
+    }
+    onSuccessfulSubmit();
+  };
+
   return (
     <form action={dispatch} ref={formRef} onChange={handleChange}>
       <div className="flex flex-col gap-y-2">
@@ -127,7 +136,7 @@ function Form({ onSuccessfulSubmit }: { onSuccessfulSubmit: () => void }) {
 
       <Submit
         disabled={submitDisabled}
-        onSuccessfulSubmit={onSuccessfulSubmit}
+        onSuccessfulSubmit={handleSuccessfulSubmit}
       />
     </form>
   );
