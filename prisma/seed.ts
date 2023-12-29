@@ -81,7 +81,6 @@ async function main() {
         title: "Editor",
         amount: 3456,
         date: new Date("2023-12-21"),
-        bookId: feathersOfSnow.id,
         userId: user.id,
       },
       {
@@ -116,7 +115,6 @@ async function main() {
         title: "Book cover",
         amount: 234,
         date: new Date("2021-07-14"),
-        bookId: crownOfGlass.id,
         userId: user.id,
       },
       {
@@ -144,7 +142,6 @@ async function main() {
         title: "Editor",
         amount: 678,
         date: new Date("2023-12-24"),
-        bookId: theWidowAndTheBeast.id,
         userId: user.id,
       },
       {
@@ -172,7 +169,6 @@ async function main() {
         title: "Sarah",
         amount: 34,
         date: new Date("2021-08-06"),
-        bookId: crownOfGlass.id,
         userId: user.id,
       },
       {

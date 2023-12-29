@@ -4,6 +4,7 @@ import Pagination from "@/components/pagination";
 import Error from "@/components/error";
 import Actions from "@/app/transactions/components/actions";
 import { fetchTransactions, fetchTransactionsPages } from "@/data";
+import domPurify from "@/lib/dom-purify";
 
 export default function TableWrapper({ currentPage }: { currentPage: number }) {
   return (
@@ -42,10 +43,10 @@ async function Table({ currentPage }: { currentPage: number }) {
           <tbody>
             {transactions.map((transaction) => (
               <tr key={transaction.id} className="leading-8">
-                <td>{transaction.title}</td>
-                <td>{transaction.amount}</td>
-                <td>{transaction.date}</td>
-                <td>{transaction.book?.title}</td>
+                <td>{domPurify(transaction.title)}</td>
+                <td>{domPurify(transaction.amount)}</td>
+                <td>{domPurify(transaction.date)}</td>
+                <td>{domPurify(transaction.book?.title)}</td>
                 <td>
                   <button className="btn btn-ghost btn-xs align-middle">
                     <ReceiptRefundIcon className="h-5 w-5" />
