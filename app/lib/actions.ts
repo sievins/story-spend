@@ -81,7 +81,6 @@ export async function deleteTransaction(id: number) {
 }
 
 export async function createBook(_prevState: any, formData: FormData) {
-  throw new Error("Failed to create book.");
   if (!isSignedIn()) {
     throw new Error("You must be signed in to create a book.");
   }
