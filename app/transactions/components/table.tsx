@@ -26,6 +26,16 @@ async function Table({ currentPage }: { currentPage: number }) {
     fetchTransactions(currentPage),
   ]);
 
+  const noTransactions = totalPages === 0 && transactions.length === 0;
+  if (noTransactions) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 mb-7">
+        <h2>No transactions</h2>
+        <p>Add a transaction by clicking the button above.</p>
+      </div>
+    );
+  }
+
   return (
     <>
       {/* Allow tooltip errors (on delete) to overlow on large screens */}
