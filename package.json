@@ -13,7 +13,7 @@
     "@heroicons/react": "^2.1.1",
     "@prisma/client": "5.7.1",
     "clsx": "^2.1.0",
-    "isomorphic-dompurify": "^2.1.0",
+    "isomorphic-dompurify": "^2.2.0",
     "next": "14.0.5-canary.41",
     "next-auth": "beta",
     "react": "^18.2.0",
