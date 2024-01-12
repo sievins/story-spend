@@ -28,7 +28,7 @@
     "@types/react-dom": "^18.2.18",
     "autoprefixer": "^10.4.16",
     "cz-conventional-changelog": "^3.3.0",
-    "daisyui": "^4.5.0",
+    "daisyui": "^4.6.0",
     "eslint": "^8.56.0",
     "eslint-config-next": "14.0.5-canary.52",
     "postcss": "^8.4.33",
