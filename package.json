@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.2.1",
-    "@heroicons/react": "^2.1.4",
+    "@heroicons/react": "^2.1.5",
     "@prisma/client": "5.16.2",
     "clsx": "^2.1.1",
     "isomorphic-dompurify": "^2.13.0",
