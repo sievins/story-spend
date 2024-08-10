@@ -4,7 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
-import { HomeIcon, CreditCardIcon } from "@heroicons/react/24/solid";
+import {
+  HomeIcon,
+  CreditCardIcon,
+  BookOpenIcon,
+} from "@heroicons/react/24/solid";
 import Navbar from "@/components/navbar";
 import logo from "@/public/logo.png";
 
@@ -13,6 +17,7 @@ export const drawerID = "my-drawer";
 const links = [
   { name: "Dashboard", href: "/", icon: HomeIcon },
   { name: "Transactions", href: "/transactions", icon: CreditCardIcon },
+  { name: "Books", href: "/books", icon: BookOpenIcon },
 ];
 
 export default function Drawer({ children }: { children: React.ReactNode }) {
