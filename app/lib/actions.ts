@@ -110,3 +110,30 @@ export async function createBook(_prevState: any, formData: FormData) {
 
   revalidatePath("/transactions/create");
 }
+
+export async function createBookAndRedirect(
+  _prevState: any,
+  formData: FormData,
+) {
+  await createBook(_prevState, formData);
+  redirect("/books");
+}
+
+export async function deleteBook(id: number) {
+  if (!isSignedIn()) {
+    throw new Error("You must be signed in to delete a book.");
+  }
+
+  try {
+    await prisma.book.delete({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to delete book.");
+  }
+
+  revalidatePath("/books");
+}

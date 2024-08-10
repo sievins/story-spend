@@ -4,9 +4,11 @@ An expenses app for authors. Built with [Next.js](https://nextjs.org/).
 
 ## Copyright notice and statement
 
-This repository does not offer any license for the code contained within it. All rights are reserved.
+This repository does not offer any license for the code contained within it.
+All rights are reserved.
 
-Nobody can copy, distribute, or modify the work without being at risk of take-downs, shake-downs, or litigation.
+Nobody can copy, distribute, or modify the work without being at risk of
+take-downs, shake-downs, or litigation.
 
 ## Requirements
 
