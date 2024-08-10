@@ -8,6 +8,8 @@ export const {
   auth,
   signOut,
 } = NextAuth({
+  // There is a type error bug in next-auth: https://github.com/nextauthjs/next-auth/issues/6106
+  // @ts-ignore
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   ...authConfig,
