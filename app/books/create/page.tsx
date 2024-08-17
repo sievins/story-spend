@@ -1,5 +1,5 @@
 import Error from "@/components/error";
-import Form from "@/app/books/create/components/form";
+import Form from "@/app/books/components/form";
 
 export default function CreateBook() {
   return (
