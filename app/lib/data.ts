@@ -97,3 +97,28 @@ export async function fetchBooks() {
     throw new Error("Failed to fetch books.");
   }
 }
+
+export async function fetchBookById(id: string) {
+  noStore();
+
+  const bookId = Number(id);
+  if (isNaN(bookId)) {
+    console.error(`Invalid book id ${id}.`);
+    return null;
+  }
+
+  try {
+    const user = await fetchUser();
+
+    const book = await prisma.book.findUnique({
+      where: {
+        userId: user.id,
+        id: bookId,
+      },
+    });
+
+    return book;
+  } catch (error) {
+    console.error("Database Error:", error);
+  }
+}

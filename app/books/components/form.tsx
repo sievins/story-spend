@@ -3,26 +3,37 @@
 import { useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
-import { createBookAndRedirect } from "@/actions";
+import { upsertBookAndRedirect } from "@/actions";
 import { bookSchema, type BookSchema } from "@/schemas";
+import type { Book } from "@prisma/client";
 import clsx from "clsx";
 
-function Submit({ disabled }: { disabled: boolean }) {
+function Submit({
+  disabled,
+  isEditiing,
+}: {
+  disabled: boolean;
+  isEditiing: boolean;
+}) {
   const { pending } = useFormStatus();
 
   return (
     <input
       type="submit"
       className="btn btn-primary"
-      value="Create my book"
+      value={`${isEditiing ? "Edit" : "Create"} my book`}
       disabled={disabled || pending}
     />
   );
 }
 
-export default function Form() {
+export default function Form({ book }: { book?: Book }) {
+  const upsertBookAndRedirectWithId = upsertBookAndRedirect.bind(
+    null,
+    book?.id,
+  );
   // No need to use _state (containing the errors from server actions): can only submit the book if the form is valid.
-  const [_state, dispatch] = useFormState(createBookAndRedirect, null);
+  const [_state, dispatch] = useFormState(upsertBookAndRedirectWithId, null);
   const formRef = useRef<HTMLFormElement>(null);
 
   const [submitDisabled, setSubmitDisabled] = useState(true);
@@ -80,6 +91,7 @@ export default function Form() {
               maxLength={100}
               required
               onBlur={() => handleBlur("title")}
+              defaultValue={book?.title}
             />
             <div
               className={clsx("label hidden", {
@@ -108,7 +120,7 @@ export default function Form() {
 
       <div className="h-6" />
 
-      <Submit disabled={submitDisabled} />
+      <Submit disabled={submitDisabled} isEditiing={!!book?.id} />
     </form>
   );
 }

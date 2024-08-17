@@ -5,6 +5,10 @@ import { deleteTransaction } from "@/actions";
 
 export default function Actions({ transactionId }: { transactionId: number }) {
   return (
-    <EditDelete itemId={transactionId} deleteItemAction={deleteTransaction} />
+    <EditDelete
+      itemId={transactionId}
+      editSlug="transactions"
+      deleteItemAction={deleteTransaction}
+    />
   );
 }
