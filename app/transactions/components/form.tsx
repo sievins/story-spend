@@ -4,31 +4,44 @@ import { useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { CheckCircleIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 import { CheckCircleIcon as CheckCircleOutlineIcon } from "@heroicons/react/24/outline";
-import { createTransaction } from "@/actions";
+import { upsertTransaction } from "@/actions";
 import { transactionSchema, type TransactionSchema } from "@/schemas";
-import type { Book } from "@prisma/client";
+import type { Book, Transaction } from "@prisma/client";
 import clsx from "clsx";
 import CreateBook, {
   createBookId,
-} from "@/app/transactions/create/components/create-book";
+} from "@/app/transactions/components/create-book";
 import domPurify from "@/lib/dom-purify";
 
-function Submit({ disabled }: { disabled: boolean }) {
+function Submit({
+  disabled,
+  isEditing,
+}: {
+  disabled: boolean;
+  isEditing: boolean;
+}) {
   const { pending } = useFormStatus();
 
   return (
     <input
       type="submit"
       className="btn btn-primary"
-      value="Create my transaction"
+      value={`${isEditing ? "Edit" : "Create"} my transaction`}
       disabled={disabled || pending}
     />
   );
 }
 
-export default function Form({ books }: { books: Book[] }) {
+export default function Form({
+  books,
+  transaction,
+}: {
+  books: Book[];
+  transaction?: Transaction;
+}) {
+  const upsertTransactionWithId = upsertTransaction.bind(null, transaction?.id);
   // No need to use _state (containing the errors from server actions): can only submit the transaction if the form is valid.
-  const [_state, dispatch] = useFormState(createTransaction, null);
+  const [_state, dispatch] = useFormState(upsertTransactionWithId, null);
   const formRef = useRef<HTMLFormElement>(null);
 
   const [submitDisabled, setSubmitDisabled] = useState(true);
@@ -81,7 +94,8 @@ export default function Form({ books }: { books: Book[] }) {
     }
   };
 
-  const today = new Date().toISOString().split("T")[0];
+  const dateToString = (date: Date) => date.toISOString().split("T")[0];
+  const today = dateToString(new Date());
 
   return (
     <>
@@ -101,6 +115,7 @@ export default function Form({ books }: { books: Book[] }) {
                 maxLength={100}
                 required
                 onBlur={() => handleBlur("title")}
+                defaultValue={transaction?.title}
               />
               <div
                 className={clsx("label hidden", {
@@ -143,6 +158,9 @@ export default function Form({ books }: { books: Book[] }) {
                 step="0.01"
                 required
                 onBlur={() => handleBlur("amount")}
+                defaultValue={
+                  transaction ? transaction.amount / 100 : undefined
+                }
               />
               <div
                 className={clsx("label hidden", {
@@ -179,7 +197,9 @@ export default function Form({ books }: { books: Book[] }) {
                 name="date"
                 type="date"
                 className="input input-bordered w-full"
-                defaultValue={today}
+                defaultValue={
+                  transaction ? dateToString(transaction.date) : today
+                }
                 required
               />
             </label>
@@ -238,7 +258,9 @@ export default function Form({ books }: { books: Book[] }) {
                 id="book"
                 name="bookId"
                 className="select select-bordered w-full"
-                defaultValue="No book selected"
+                defaultValue={
+                  transaction?.bookId ? transaction.bookId : "No book selected"
+                }
                 onChange={(e) => {
                   const bookId = e.target.value;
                   if (bookId) {
@@ -267,7 +289,7 @@ export default function Form({ books }: { books: Book[] }) {
 
         <div className="h-6" />
 
-        <Submit disabled={submitDisabled} />
+        <Submit disabled={submitDisabled} isEditing={!!transaction?.id} />
       </form>
       {/* CreateBook dialog must be outside of form element, as it contains its own form */}
       <CreateBook />

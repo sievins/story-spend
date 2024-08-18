@@ -10,10 +10,10 @@ import clsx from "clsx";
 
 function Submit({
   disabled,
-  isEditiing,
+  isEditing,
 }: {
   disabled: boolean;
-  isEditiing: boolean;
+  isEditing: boolean;
 }) {
   const { pending } = useFormStatus();
 
@@ -21,7 +21,7 @@ function Submit({
     <input
       type="submit"
       className="btn btn-primary"
-      value={`${isEditiing ? "Edit" : "Create"} my book`}
+      value={`${isEditing ? "Edit" : "Create"} my book`}
       disabled={disabled || pending}
     />
   );
@@ -120,7 +120,7 @@ export default function Form({ book }: { book?: Book }) {
 
       <div className="h-6" />
 
-      <Submit disabled={submitDisabled} isEditiing={!!book?.id} />
+      <Submit disabled={submitDisabled} isEditing={!!book?.id} />
     </form>
   );
 }
