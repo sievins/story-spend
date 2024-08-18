@@ -29,9 +29,17 @@ async function fetchUser() {
   }
 }
 
-export async function createTransaction(_prevState: any, formData: FormData) {
+export async function upsertTransaction(
+  id: number | undefined,
+  _prevState: any,
+  formData: FormData,
+) {
+  const createEditString = id ? "edit" : "create";
+
   if (!isSignedIn()) {
-    throw new Error("You must be signed in to create a transaction.");
+    throw new Error(
+      `You must be signed in to ${createEditString} a transaction.`,
+    );
   }
 
   const validatedFields = transactionSchema.safeParse(
@@ -46,15 +54,23 @@ export async function createTransaction(_prevState: any, formData: FormData) {
   try {
     const user = await fetchUser();
 
-    await prisma.transaction.create({
-      data: {
+    await prisma.transaction.upsert({
+      where: {
+        id: id || -1, // upsert doesn't suppport undefined: https://github.com/prisma/prisma-client-js/issues/781
+        userId: user.id,
+      },
+      update: {
+        ...validatedFields.data,
+        userId: user.id,
+      },
+      create: {
         ...validatedFields.data,
         userId: user.id,
       },
     });
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to create transaction.");
+    throw new Error(`Failed to ${createEditString} transaction.`);
   }
 
   revalidatePath("/transactions");
@@ -122,8 +138,9 @@ async function upsertBook(formData: FormData, id?: number) {
 export async function createBook(_prevState: any, formData: FormData) {
   upsertBook(formData);
 
-  // Books can be created from the /transactions/create page via a model.
+  // Books can be created from the /transactions/create or edit page via a model.
   revalidatePath("/transactions/create");
+  revalidatePath("/transactions/[slug]/edit");
 }
 
 export async function upsertBookAndRedirect(

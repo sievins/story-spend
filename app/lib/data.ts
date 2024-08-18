@@ -79,6 +79,31 @@ export async function fetchTransactions(page: number) {
   }
 }
 
+export async function fetchTransactionById(id: string) {
+  noStore();
+
+  const transactionId = Number(id);
+  if (isNaN(transactionId)) {
+    console.error(`Invalid transaction id ${id}.`);
+    return null;
+  }
+
+  try {
+    const user = await fetchUser();
+
+    const transaction = await prisma.transaction.findUnique({
+      where: {
+        userId: user.id,
+        id: transactionId,
+      },
+    });
+
+    return transaction;
+  } catch (error) {
+    console.error("Database Error:", error);
+  }
+}
+
 export async function fetchBooks() {
   noStore();
 
