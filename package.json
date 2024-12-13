@@ -29,7 +29,7 @@
     "@types/react-dom": "^18.3.5",
     "autoprefixer": "^10.4.20",
     "cz-conventional-changelog": "^3.3.0",
-    "daisyui": "^4.12.21",
+    "daisyui": "^4.12.22",
     "eslint": "^8.57.1",
     "eslint-config-next": "14.2.13",
     "postcss": "^8.4.49",
