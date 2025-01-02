@@ -11,6 +11,7 @@ import clsx from "clsx";
 import CreateBook, {
   createBookId,
 } from "@/app/transactions/components/create-book";
+import { UploadButton } from "@/app/components/uploadthing";
 import domPurify from "@/lib/dom-purify";
 
 function Submit({
@@ -231,6 +232,18 @@ export default function Form({
           {/*     </div> */}
           {/*   </div> */}
           {/* </div> */}
+          <UploadButton
+            endpoint="imageUploader"
+            onClientUploadComplete={(res) => {
+              // Do something with the response
+              console.log("Files: ", res);
+              alert("Upload Completed");
+            }}
+            onUploadError={(error: Error) => {
+              // Do something with the error.
+              alert(`ERROR! ${error.message}`);
+            }}
+          />
 
           {/* Book field */}
           <div className="flex">

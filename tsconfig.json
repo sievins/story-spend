@@ -21,6 +21,7 @@
     "paths": {
       "@/*": ["./*"],
       "@/components/*": ["./app/components/*"],
+      "@/api/*": ["./app/api/*"],
       "@/data": ["./app/lib/data.ts"],
       "@/actions": ["./app/lib/actions.ts"],
       "@/schemas": ["./app/lib/schemas.ts"],

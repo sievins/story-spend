@@ -6,7 +6,7 @@ import { auth as authNext, signOut as signOutNext } from "@/auth";
 import { transactionSchema, bookSchema } from "@/schemas";
 import prisma from "@/db";
 
-async function isSignedIn() {
+export async function isSignedIn() {
   const auth = await authNext();
   return !!auth?.user;
 }
@@ -15,7 +15,7 @@ export async function signOut() {
   await signOutNext();
 }
 
-async function fetchUser() {
+export async function fetchUser() {
   try {
     const auth = await authNext();
     const user = auth?.user;

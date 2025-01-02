@@ -1,8 +1,9 @@
 import type { Config } from "tailwindcss";
 import daisyui from "daisyui";
 import typography from "@tailwindcss/typography";
+import { withUt } from "uploadthing/tw";
 
-const config: Config = {
+const config: Config = withUt({
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -22,6 +23,6 @@ const config: Config = {
     themes: ["cupcake"],
     logs: false,
   },
-};
+});
 
 export default config;
